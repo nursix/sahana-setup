@@ -223,6 +223,8 @@ echo "Setting up Sahana..."
 
 echo "Copying Config Template..."
 rm -rf $EDENDIR/databases/*
+rm -rf $EDENDIR/errors/*
+rm -rf $EDENDIR/sessions/*
 cp $EDENDIR/modules/templates/000_config.py $EDENDIR/models
 
 CONFIG=$EDENDIR/models/000_config.py
