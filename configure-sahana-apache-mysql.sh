@@ -43,6 +43,9 @@ echo -e "What host name should we use? : \c "
 read hostname
 sitename=$hostname".$DOMAIN"
 
+echo -e "Which template should we use? : \c "
+read template
+
 echo -e "What is the current root MySQL password: \c "
 read -s rootpw
 echo
@@ -230,10 +233,14 @@ cp $EDENDIR/modules/templates/000_config.py $EDENDIR/models
 CONFIG=$EDENDIR/models/000_config.py
 
 echo "Updating Config..."
+if [ ! -z "$template" ]; then
+    sed -i "s|settings.base.template = \"default\"|settings.base.template = \"$template\"|" $CONFIG
+fi
+
 sed -i 's|EDITING_CONFIG_FILE = False|EDITING_CONFIG_FILE = True|' $CONFIG
 sed -i "s|akeytochange|$sitename$password|" $CONFIG
-sed -i "s|127.0.0.1:8000|$sitename|" $CONFIG
-sed -i 's|base.cdn = False|base.cdn = True|' $CONFIG
+sed -i "s|#settings.base.public_url = \"http://127.0.0.1:8000\"|settings.base.public_url = \"http://$sitename\"|" $CONFIG
+sed -i 's|#settings.base.cdn = True|settings.base.cdn = True|' $CONFIG
 
 echo "Updating database settings..."
 sed -i 's|#settings.database.db_type = "mysql"|settings.database.db_type = "mysql"|' $CONFIG
