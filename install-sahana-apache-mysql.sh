@@ -8,8 +8,8 @@
 # =============================================================================
 # Configuration
 
-# Stable 2.14.5
-WEB2PY_COMMIT=81d0291
+# Stable 2.14.6
+WEB2PY_COMMIT=cda35fd
 
 # Which OS are we running?
 read -d . DEBIAN < /etc/debian_version
