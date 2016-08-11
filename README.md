@@ -4,6 +4,12 @@ improving them and keeping them up-to-date.
 
 To find out how you can use this, check the [wiki](https://github.com/nursix/sahana-setup/wiki).
 
+**License:**
+
+All scripts in this repository are published under the [MIT license](https://opensource.org/licenses/MIT).
+
+All documentation, including the wiki, are published under the [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0).
+
 **Credit:**
 
 My scripts are partially derived from the installation/configuration
