@@ -4,7 +4,7 @@ improving them and keeping them up-to-date.
 
 To find out how you can use this, check the [wiki](https://github.com/nursix/sahana-setup/wiki).
 
-Credit:
+**Credit:**
 
 My scripts are partially derived from the installation/configuration
 scripts in the official [Sahana Installation Guidelines](http://eden.sahanafoundation.org/wiki/InstallationGuidelines),
