@@ -43,7 +43,7 @@ echo -e "What host name should we use? : \c "
 read hostname
 sitename=$hostname".$DOMAIN"
 
-echo -e "Which template should we use? : \c "
+echo -e "Which template should we use? [Enter=default] : \c "
 read template
 
 echo -e "What is the current root MySQL password: \c "
@@ -100,10 +100,10 @@ cat << EOF > "/etc/apache2/sites-available/production$extension"
 <VirtualHost *:80>
   ServerName $hostname.$DOMAIN
   ServerAdmin webmaster@$DOMAIN
-  DocumentRoot /home/web2py/applications 
+  DocumentRoot /home/web2py/applications
 
   WSGIScriptAlias / /home/web2py/wsgihandler.py
-  ## Edit the process and the maximum-requests to reflect your RAM 
+  ## Edit the process and the maximum-requests to reflect your RAM
   WSGIDaemonProcess web2py user=web2py group=web2py home=/home/web2py processes=4 maximum-requests=100
 
   RewriteEngine On
@@ -123,7 +123,7 @@ cat << EOF > "/etc/apache2/sites-available/production$extension"
   <LocationMatch "^(/[\w_]*/static/.*)">
     Order Allow,Deny
     Allow from all
-    
+
     SetOutputFilter DEFLATE
     BrowserMatch ^Mozilla/4 gzip-only-text/html
     BrowserMatch ^Mozilla/4\.0[678] no-gzip

@@ -102,14 +102,16 @@ apt-get -y install python-matplotlib
 apt-get -y install python-requests
 apt-get -y install python-xlwt
 
-# Upgrade ReportLab for Percentage support
-# echo "Upgrading ReportLab"
-# #apt-get remove -y python-reportlab
-# wget --no-check-certificate http://pypi.python.org/packages/source/r/reportlab/reportlab-3.2.0.tar.gz
-# tar zxvf reportlab-3.2.0.tar.gz
-# cd reportlab-3.2.0
-# python setup.py install
-# cd ..
+if [ $DEBIAN == '7' ]; then
+    # Upgrade ReportLab for Percentage support
+    echo "Upgrading ReportLab"
+    #apt-get remove -y python-reportlab
+    wget --no-check-certificate http://pypi.python.org/packages/source/r/reportlab/reportlab-3.2.0.tar.gz
+    tar zxvf reportlab-3.2.0.tar.gz
+    cd reportlab-3.2.0
+    python setup.py install
+    cd ..
+fi
 
 # Upgrade Shapely for Simplify enhancements
 echo "Upgrading Shapely"
@@ -193,7 +195,7 @@ routes_onerror = [
         ('*/*', '/eden/errors/index'),
     ]
 EOF
-    
+
 # Configure Matplotlib
 mkdir /home/web2py/.matplotlib
 chown web2py /home/web2py/.matplotlib
@@ -292,7 +294,7 @@ else
     a2ensite production$extension
     # Start the Scheduler
     cd ~web2py && sudo -H -u web2py nohup python web2py.py -K eden -Q >/dev/null 2>&1 &
-fi 
+fi
 apache2ctl restart
 EOF
 chmod +x /usr/local/bin/maintenance
