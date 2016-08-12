@@ -4,27 +4,43 @@
 #
 # License: MIT
 #
-# Execute like:
-#     bash sahana-dev-setup.sh
+# Usage (bash):
+#     sahana-dev-setup.sh [target directory] [GitHub fork]
+#
+# Typically used like:
+#     sahana-dev-setup.sh sahana git://github.com/<yourname>/eden.git
 #
 # =============================================================================
 # Use web2py-2.14.6-stable
 WEB2PY_COMMIT=cda35fd
 
-if [ $# -eq 1 ]; then
-    SAHANAHOME=$1
+UPSTREAM=git://github.com/sahana/eden.git
+
+if [ $# -ge 1 ]; then
+    SAHANAHOME=`realpath $1`
 else
     SAHANAHOME=~/sahana
+fi
+
+if [ $# -ge 2 ]; then
+    ORIGIN=$2
+else
+    echo "WARNING: no GitHub fork specified, cloning directly from upstream"
+    echo "Specify a fork if you want to be able to publish your modifications on GitHub:"
+    echo ""
+    echo "    sahana-dev-setup [target directory] [GitHub fork]"
+    echo ""
+    ORIGIN=UPSTREAM
 fi
 
 # Create SAHANAHOME directory
 if [ ! -d $SAHANAHOME ]; then
    mkdir -p $SAHANAHOME
 else
-   echo "Error: directory $SAHANAHOME already exists!"
+   echo "ERROR: directory $SAHANAHOME already exists!"
    echo "Remove it, or specify a non-existent target directory:"
    echo ""
-   echo "    sahana-setup [directory]"
+   echo "    sahana-dev-setup [target directory] [GitHub fork]"
    echo ""
    exit 1
 fi
@@ -33,7 +49,7 @@ fi
 cd $SAHANAHOME
 git clone --recursive git://github.com/web2py/web2py.git
 
-# Reset to release (if specified at the top of this script)
+# Reset to release (as specified at the top of this script)
 if [ ! -z "$WEB2PY_COMMIT" ]; then
    cd web2py
    git checkout $WEB2PY_COMMIT
@@ -43,7 +59,14 @@ fi
 
 # Clone Sahana
 cd $SAHANAHOME
-git clone git://github.com/sahana/eden.git
+git clone $ORIGIN eden
+
+# Set upstream if cloning from fork
+cd $SAHANAHOME/eden
+if [ $ORIGIN != $UPSTREAM ]; then
+    cd $SAHANAHOME/eden
+    git remote add upstream $UPSTREAM
+fi
 
 # Create additional subdirectories
 cd $SAHANAHOME/eden
