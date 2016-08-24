@@ -30,7 +30,7 @@ else
     echo ""
     echo "    sahana-dev-setup [target directory] [GitHub fork]"
     echo ""
-    ORIGIN=UPSTREAM
+    ORIGIN=$UPSTREAM
 fi
 
 # Create SAHANAHOME directory
@@ -90,6 +90,10 @@ sed -i 's|FINISHED_EDITING_CONFIG_FILE = False|settings.base.migrate = True|' $C
 sed -i 's|settings.base.migrate = False|settings.base.migrate = True|' $CONFIG
 sed -i 's|settings.base.debug = False|settings.base.debug = True|' $CONFIG
 sed -i 's|#settings.base.prepopulate += ("default", "default/users")|settings.base.prepopulate += ("default", "default/users")|' $CONFIG
+
+# Create a unique HMAC key for password encryption
+#UUID=`python -c $'import uuid\nprint uuid.uuid4()'`
+#sed -i "s|akeytochange|$UUID|" $CONFIG
 
 # Helper scripts that make things little easier...
 cd $SAHANAHOME

@@ -234,15 +234,19 @@ cp $EDENDIR/modules/templates/000_config.py $EDENDIR/models
 
 CONFIG=$EDENDIR/models/000_config.py
 
+
 echo "Updating Config..."
 if [ ! -z "$template" ]; then
     sed -i "s|settings.base.template = \"default\"|settings.base.template = \"$template\"|" $CONFIG
 fi
 
 sed -i 's|EDITING_CONFIG_FILE = False|EDITING_CONFIG_FILE = True|' $CONFIG
-sed -i "s|akeytochange|$sitename$password|" $CONFIG
 sed -i "s|#settings.base.public_url = \"http://127.0.0.1:8000\"|settings.base.public_url = \"http://$sitename\"|" $CONFIG
 sed -i 's|#settings.base.cdn = True|settings.base.cdn = True|' $CONFIG
+
+# Create a unique HMAC key for password encryption
+UUID=`python -c $'import uuid\nprint uuid.uuid4()'`
+sed -i "s|akeytochange|$UUID|" $CONFIG
 
 echo "Updating database settings..."
 sed -i 's|#settings.database.db_type = "mysql"|settings.database.db_type = "mysql"|' $CONFIG
