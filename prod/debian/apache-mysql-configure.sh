@@ -5,7 +5,7 @@
 # License: MIT
 #
 # Execute like:
-#     bash configure-sahana-apache-mysql.sh
+#     bash apache-mysql-configure.sh
 #
 # =============================================================================
 # Configuration
@@ -253,13 +253,13 @@ sed -i 's|#settings.database.db_type = "mysql"|settings.database.db_type = "mysq
 sed -i "s|#settings.database.password = \"password\"|settings.database.password = \"$password\"|" $CONFIG
 
 echo "Creating the tables & populating with base data..."
-sed -i 's|settings.base.prepopulate = 0|settings.base.prepopulate = 1|' $CONFIG
+#sed -i 's|settings.base.prepopulate = 0|settings.base.prepopulate = 1|' $CONFIG
 sed -i 's|settings.base.migrate = False|settings.base.migrate = True|' $CONFIG
 cd $WEB2PYDIR
 sudo -H -u web2py python web2py.py -S eden -M -R applications/eden/static/scripts/tools/noop.py
 
 echo "Compiling for production..."
-sed -i 's|settings.base.prepopulate = 1|settings.base.prepopulate = 0|' $CONFIG
+sed -i 's|#settings.base.prepopulate = 0|settings.base.prepopulate = 0|' $CONFIG
 sed -i 's|settings.base.migrate = True|settings.base.migrate = False|' $CONFIG
 cd $WEB2PYDIR
 sudo -H -u web2py python web2py.py -S eden -M -R applications/eden/static/scripts/tools/compile.py

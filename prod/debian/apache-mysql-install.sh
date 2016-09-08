@@ -5,7 +5,7 @@
 # License: MIT
 #
 # Execute like:
-#     bash install-sahana-apache-mysql.sh
+#     bash apache-mysql-install.sh
 #
 # =============================================================================
 # Configuration
@@ -32,21 +32,25 @@ fi
 echo "Updating System"
 apt-get update
 apt-get upgrade -y
+apt-get clean
 
 # =============================================================================
 # Install Admin Tools
 echo "Installing Admin Tools"
 apt-get install -y unzip psmisc mlocate telnet lrzsz vim elinks-lite rcconf htop sudo
+apt-get clean
 
 # =============================================================================
 # Install Git
 echo "Installing Git"
 apt-get install -y git-core
+apt-get clean
 
 # =============================================================================
 # Email
 echo "Installing Mail Server"
-apt-get -y install exim4-config exim4-daemon-light
+apt-get install -y exim4-config exim4-daemon-light
+apt-get clean
 
 # =============================================================================
 # MySQL
@@ -153,7 +157,7 @@ fi
 
 echo "Cloning web2py"
 cd /home
-if [ -d "web2py" ]; then
+if [ -d "web2py/applications" ]; then
     echo "WARNING: This will remove the existing web2py/Sahana installation - continue"
     echo "Type 'yes' if you are certain"
     read answer
@@ -172,7 +176,7 @@ git clone --recursive git://github.com/web2py/web2py.git
 if [ ! -z "$WEB2PY_COMMIT" ]; then
     echo "Checking out web2py stable"
     cd web2py
-    git checkout $WEB2PY_COMMIT
+    git reset --hard $WEB2PY_COMMIT
     git submodule update
     cd ..
 fi
