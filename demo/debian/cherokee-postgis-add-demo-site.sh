@@ -254,7 +254,7 @@ exit 0
 EOF
 chmod a+x /etc/init.d/uwsgi-$INSTANCE
 
-if [ $autostart = 'y' ]; then
+if [ '$autostart' = 'y' ]; then
     echo "Configuring $INSTANCE instance for start at boot"
     update-rc.d uwsgi-$INSTANCE defaults
 fi
