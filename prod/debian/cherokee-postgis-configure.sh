@@ -98,7 +98,7 @@ echo "Configuring nightly backup..."
 if grep -Fq "/usr/local/bin/backup" /etc/crontab; then
     echo "...backup already configured [SKIP]"
 else
-    echo "1 2   * * * * root    /usr/local/bin/backup" >> "/etc/crontab"
+    echo "1 2   * * *   root    /usr/local/bin/backup" >> "/etc/crontab"
 fi
 
 # =============================================================================
