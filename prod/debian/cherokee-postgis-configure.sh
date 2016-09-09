@@ -95,10 +95,12 @@ su -c - postgres "psql -q -d sahana -c 'grant all on spatial_ref_sys to sahana;'
 # =============================================================================
 # Schedule backups for 02:01 daily
 echo "Configuring nightly backup..."
-if grep -Fq "/usr/local/bin/backup" /etc/crontab; then
-    echo "...backup already configured [SKIP]"
+if [ ! -e /etc/cron.d/sahana ]; then
+cat << EOF > "/etc/cron.d/sahana"
+1 2   * * *   root   /usr/local/bin/backup >/dev/null 2>&1
+EOF
 else
-    echo "1 2   * * *   root    /usr/local/bin/backup" >> "/etc/crontab"
+    echo "...backup already configured [SKIP]"
 fi
 
 # =============================================================================
