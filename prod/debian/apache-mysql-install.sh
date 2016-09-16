@@ -94,49 +94,38 @@ EOF
 
 # =============================================================================
 # Python
+#
 echo "Installing Python Libraries"
-# Install Libraries
 apt-get -y install libgeos-c1
+apt-get -y install libgeos-dev
 
-# Install Python
 apt-get -y install python-dev
 apt-get -y install python-lxml python-setuptools python-dateutil
 apt-get -y install python-serial
-apt-get -y install python-imaging python-reportlab
+if [ $DEBIAN == '7' ]; then
+    apt-get -y install python-imaging
+else
+    apt-get -y install python-imaging python-reportlab
+fi
 apt-get -y install python-imaging
 apt-get -y install python-matplotlib
 apt-get -y install python-requests
 apt-get -y install python-xlwt
 
 if [ $DEBIAN == '7' ]; then
-    # Upgrade ReportLab for Percentage support
+    # Need ReportLab>3.0 for percentage support (Wheezy installs only 2.5)
     echo "Upgrading ReportLab"
-    #apt-get remove -y python-reportlab
-    wget --no-check-certificate http://pypi.python.org/packages/source/r/reportlab/reportlab-3.2.0.tar.gz
-    tar zxvf reportlab-3.2.0.tar.gz
-    cd reportlab-3.2.0
-    python setup.py install
-    cd ..
+    pip install reportlab
 fi
 
-# Upgrade Shapely for Simplify enhancements
-echo "Upgrading Shapely"
-#apt-get remove -y python-shapely
-apt-get -y install libgeos-dev
-wget --no-check-certificate http://pypi.python.org/packages/source/S/Shapely/Shapely-1.5.13.tar.gz
-tar zxvf Shapely-1.5.13.tar.gz
-cd Shapely-1.5.13
-python setup.py install
-cd ..
+# Install latest Shapely for Simplify enhancements
+# Shapely>=1.3 requires GEOS>=3.3.0 (Wheezy=3.3.3, Jessie=3.4.2)
+echo "Installing Shapely"
+pip install shapely
 
-# Upgrade XLRD for XLS import support
-echo "Upgrading XLRD"
-#apt-get remove -y python-xlrd
-wget --no-check-certificate http://pypi.python.org/packages/source/x/xlrd/xlrd-0.9.4.tar.gz
-tar zxvf xlrd-0.9.4.tar.gz
-cd xlrd-0.9.4
-python setup.py install
-cd ..
+# Install latest XLRD for XLS import support
+echo "Installing XLRD"
+pip install xlrd
 
 # =============================================================================
 # Web2Py
