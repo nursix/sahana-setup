@@ -56,7 +56,7 @@ apt-get -y install libgeos-c1
 apt-get -y install libgeos-dev
 
 apt-get -y install python-dev
-apt-get -y install python-lxml python-setuptools python-dateutil
+apt-get -y install python-lxml python-setuptools python-dateutil python-pip
 apt-get -y install python-serial
 if [ $DEBIAN == '7' ]; then
     apt-get -y install python-imaging
