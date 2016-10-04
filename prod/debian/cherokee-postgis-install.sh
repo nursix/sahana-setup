@@ -639,7 +639,7 @@ EOF
 wget --no-check-certificate https://www.postgresql.org/media/keys/ACCC4CF8.asc
 apt-key add ACCC4CF8.asc
 apt-get update
-apt-get -y install postgresql-9.4 python-psycopg2 postgresql-9.4-postgis ptop
+apt-get -y install postgresql-9.4 python-psycopg2 postgresql-9.4-postgis-2.2 ptop
 
 # Tune PostgreSQL
 echo "Configuring PostgreSQL (use pg512/pg1024 scripts to finetune after install)"
