@@ -205,7 +205,7 @@ ln -fs /home/web2py/applications/eden /home/web2py/eden
 # =============================================================================
 # Cherokee
 echo "Installing Cherokee"
-apt-get install -y autoconf automake libtool gettext rrdtool
+apt-get install -y autoconf automake libtool gettext rrdtool libssl-dev
 cd /tmp
 wget https://github.com/cherokee/webserver/archive/master.zip
 unzip master.zip
